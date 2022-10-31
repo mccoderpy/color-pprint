@@ -170,7 +170,7 @@ def color_dict(
         else:
             colored_obj = type(obj)()
             for value in obj:
-                if isinstance(value, (list, tuple)):
+                if isinstance(colored_obj, (list, tuple)):
                     colored_obj.__iadd__([
                         color_dict(
                             value,
@@ -184,7 +184,7 @@ def color_dict(
                             highlight_groups=highlight_groups
                         )
                     ])
-                if isinstance(obj, DICT_TYPE):
+                elif isinstance(obj, DICT_TYPE):
                     new_value = {}
                     for k, v in value.items():
                         new_value[
