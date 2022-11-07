@@ -32,14 +32,15 @@ from typing import (
     Optional,
     Hashable,
     Sequence,
-    Pattern,
     Dict,
     Any,
     TypeVar
 )
 
+
 if TYPE_CHECKING:
     from _typeshed import SupportsWrite
+    from re import Pattern
 
 import json
 import colorama
@@ -256,7 +257,6 @@ def color_dumps(
         as_str = json.dumps(
             result,
             separators=(', ', f'{FORE.RED}:{FORE.RESET} '),
-            ensure_ascii=False,
             **kwargs
         )
     except Exception as exc:
