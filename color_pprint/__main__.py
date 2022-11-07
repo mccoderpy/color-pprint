@@ -40,7 +40,7 @@ def exit_with_help():
     
     <python> -m color_pprint [--ansi/-a] [--discord/-d] [--file/-f <FILE_TO_WRITE_TO>] <[value/PATH_TO_READ_FROM,]>
     
-    "py -m color_pprint .\\something.json '{\\"hello\\": \\"world\\", \\"something\\": 1234}'"
+    Example: "py -m color_pprint --file ./test.json --discord '{\"hello\": \"world\", \"something\": 1234}'"
     '''
              )
 
