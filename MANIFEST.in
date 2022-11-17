@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+include color_pprint
+include color_pprint/ansi/*

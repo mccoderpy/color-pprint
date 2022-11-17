@@ -1,5 +1,38 @@
+[build-system]
 requires = [
     "setuptools>=42",
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "color-pprint"
+version = "0.0.1"
+authors = [
+  { name="mccoder.py", email="mccuber04@outlook.de" },
+]
+description = "A simple package to pretty-print lists dicts, tuples, etc. with color and highlight. (documentation SOON)"
+readme = "README.md"
+requires-python = ">=3.5"
+classifiers = [
+    'Development Status :: 4 - Beta',
+        'License :: OSI Approved :: MIT License',
+        'Intended Audience :: Developers',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Topic :: Internet',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Utilities'
+]
+
+[project.urls]
+"Homepage" = "https://github.com/mccoderpy/color-pprint/"
+"Source" = "https://github.com/mccoderpy/color-pprint/"
+"Bug Tracker" = "https://github.com/mccoderpy/color-pprint/issues"
+"Support" = "https://discord.gg/sb69muSqsg"
