@@ -1,4 +1,5 @@
 /__pychache__/
+__pychache__/*
 .git
 .idea
 *.pyc
