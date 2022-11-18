@@ -35,14 +35,11 @@ from os import PathLike
 
 
 def exit_with_help():
-    sys.exit('''
-    Usage:
-    
-    <python> -m color_pprint [--ansi/-a] [--discord/-d] [--file/-f <FILE_TO_WRITE_TO>] <[value/PATH_TO_READ_FROM,]>
-    
-    Example: "py -m color_pprint --file ./test.json --discord '{\"hello\": \"world\", \"something\": 1234}'"
-    '''
-             )
+    sys.exit(
+        "Usage:\n\n"
+        "<python> -m color_pprint [--ansi/-a] [--discord/-d] [--file/-f <FILE_TO_WRITE_TO>] <[value/PATH_TO_READ_FROM,]>\n\n"
+        "Example: \"py -m color_pprint --file ./test.json --discord '{\"hello\": \"world\", \"something\": 1234}'\""
+    )
 
 
 def open_file(path: PathLike):
@@ -52,11 +49,7 @@ def open_file(path: PathLike):
 if __name__ == '__main__':
     args: list[str | PathLike] = sys.argv[1:]
     if not args or '--help' in args:
-        print(
-            '''
-            A simple package to pretty-print lists dicts, tuples, etc. with color and highlight - (c) 2022-present mccoderpy
-            '''
-        )
+        print('A simple package to pretty-print lists dicts, tuples, etc. with color and highlight - (c) 2022-present mccoderpy')
         exit_with_help()
 
     values = []
