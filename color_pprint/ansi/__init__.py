@@ -263,7 +263,7 @@ def color_dumps(
         print(exc)
         return str(result)
     else:
-        return as_str.replace('\\u001b', '\033').replace('"', '')
+        return as_str.replace('\\u001b', '\033').strip('"')
 
 
 def cprint(
