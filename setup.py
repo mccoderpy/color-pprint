@@ -5,7 +5,7 @@ with open('README.md') as fp:
 
 setup(
     name='color-pprint',
-    version='0.0.1',
+    version='0.0.2',
     url='https://github.com/mccoderpy/color-pprint',
     project_urls={
         'Source': 'https://github.com/mccoderpy/color-pprint/',
@@ -32,6 +32,8 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: Printing',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
