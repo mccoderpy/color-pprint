@@ -40,12 +40,14 @@ from typing import (
 
 if TYPE_CHECKING:
     from _typeshed import SupportsWrite
-    from re import Pattern
+
 
 import json
 import colorama
 import multidict
+from re import Pattern
 import collections.abc
+
 from pprint import saferepr
 
 __all__ = (
