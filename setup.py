@@ -5,7 +5,7 @@ with open('README.md') as fp:
 
 setup(
     name='color-pprint',
-    version='0.0.2',
+    version='0.0.3',
     url='https://github.com/mccoderpy/color-pprint',
     project_urls={
         'Source': 'https://github.com/mccoderpy/color-pprint/',
@@ -42,6 +42,7 @@ setup(
     ],
     install_requires=[
         'colorama>=0.3.7',
-        'multidict>=5.1.0'
+        'multidict>=5.1.0',
+        'regex>=0.1.20120103'
     ]
 )
