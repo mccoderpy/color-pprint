@@ -40,12 +40,14 @@ from typing import (
 
 if TYPE_CHECKING:
     from _typeshed import SupportsWrite
+    from regex import Match
 
 
 import json
 import colorama
 import multidict
-from re import Pattern
+# We need to use regex instead of the builtin re module because the build-in one doesn't support recursive patterns
+from regex import Pattern, compile as _re_compile
 import collections.abc
 
 from pprint import saferepr
@@ -78,6 +80,12 @@ DICT_TYPE = (
 T = TypeVar('T', bound=Union[Dict[Hashable, Any], str, Sequence, Any])
 T_STR = TypeVar('T_STR', bound=str)
 NoneType = type(None)
+
+DOUBLE_QUOTE_REGEX = _re_compile(r'(?<!\\)"', cache_pattern=True)
+REP_LIST_WITH_PARENTHESES_REGEX = _re_compile(
+    r'(?!\x1b\[\d)\[(?P<before>\s*)__rep_list_with_(?P<p_start>[^,]), (?P<p_end>[^,])__,?\s*(?P<after>(?>\x1b\[|[^\][]|(?R))*+)\]',
+    cache_pattern=True
+)  # This one took me literally one day to get it work like it should :)
 
 
 def highlight_values(
@@ -143,23 +151,14 @@ def color_dict(
             )
         return obj
     else:
-        if isinstance(obj, DICT_TYPE):
-            colored_obj = dict()
-            for key, value in obj.items():
-                colored_obj[
+        if isinstance(obj, (list, tuple, set)):
+            after_dump_instruction = None
+            obj_type = type(obj)
+            if obj_type in (tuple, set):
+                # So we can cast it to show as the original type after dumping, terrible solution, but it works for now
+                after_dump_instruction = f'__rep_list_with_{"(, )" if obj_type is tuple else "{, }"}__'
+            to_return = [
                     color_dict(
-                        key,
-                        key_color=key_color,
-                        bool_color=bool_color,
-                        int_color=int_color,
-                        str_color=str_color,
-                        highlight_color_bg=highlight_color_bg,
-                        highlight_color_fg=highlight_color_fg,
-                        highlight=highlight,
-                        highlight_groups=highlight_groups,
-                        __is_key=True
-                    )
-                ] = color_dict(
                         value,
                         key_color=key_color,
                         bool_color=bool_color,
@@ -169,67 +168,37 @@ def color_dict(
                         highlight_color_fg=highlight_color_fg,
                         highlight=highlight,
                         highlight_groups=highlight_groups
-                    )
-        else:
-            colored_obj = type(obj)()
-            for value in obj:
-                if isinstance(colored_obj, (list, tuple)):
-                    colored_obj.__iadd__([
-                        color_dict(
-                            value,
-                            key_color=key_color,
-                            bool_color=bool_color,
-                            int_color=int_color,
-                            str_color=str_color,
-                            highlight_color_bg=highlight_color_bg,
-                            highlight_color_fg=highlight_color_fg,
-                            highlight=highlight,
-                            highlight_groups=highlight_groups
-                        )
-                    ])
-                elif isinstance(obj, DICT_TYPE):
-                    new_value = {}
-                    for k, v in value.items():
-                        new_value[
-                            color_dict(
-                                k,
-                                key_color=key_color,
-                                bool_color=bool_color,
-                                int_color=int_color,
-                                str_color=str_color,
-                                highlight_color_bg=highlight_color_bg,
-                                highlight_color_fg=highlight_color_fg,
-                                highlight=highlight,
-                                highlight_groups=highlight_groups,
-                                __is_key=True
-                            )
-                        ] = color_dict(
-                            v,
-                            key_color=key_color,
-                            bool_color=bool_color,
-                            int_color=int_color,
-                            str_color=str_color,
-                            highlight_color_bg=highlight_color_bg,
-                            highlight_color_fg=highlight_color_fg,
-                            highlight=highlight,
-                            highlight_groups=highlight_groups
-                        )
-                    colored_obj.append(new_value)
-                else:
-                    colored_obj.append(
-                        color_dict(
-                            value,
-                            key_color=key_color,
-                            bool_color=bool_color,
-                            int_color=int_color,
-                            highlight_color_bg=highlight_color_bg,
-                            highlight_color_fg=highlight_color_fg,
-                            str_color=str_color,
-                            highlight=highlight,
-                            highlight_groups=highlight_groups
-                        )
-                    )
-        return colored_obj
+                    ) for value in obj
+                ]
+            if after_dump_instruction:
+                to_return = [after_dump_instruction, *to_return]
+            return to_return
+        elif isinstance(obj, DICT_TYPE):
+            return {
+                color_dict(
+                    k,
+                    key_color=key_color,
+                    bool_color=bool_color,
+                    int_color=int_color,
+                    str_color=str_color,
+                    highlight_color_bg=highlight_color_bg,
+                    highlight_color_fg=highlight_color_fg,
+                    highlight=highlight,
+                    highlight_groups=highlight_groups,
+                    __is_key=True
+                ): color_dict(
+                    v,
+                    key_color=key_color,
+                    bool_color=bool_color,
+                    int_color=int_color,
+                    str_color=str_color,
+                    highlight_color_bg=highlight_color_bg,
+                    highlight_color_fg=highlight_color_fg,
+                    highlight=highlight,
+                    highlight_groups=highlight_groups
+                )
+                for k, v in obj.items()
+            }
 
 
 def color_dumps(
@@ -261,11 +230,21 @@ def color_dumps(
             separators=(', ', f'{FORE.RED}:{FORE.RESET} '),
             **kwargs
         )
+        as_str = DOUBLE_QUOTE_REGEX.sub("", as_str)
+        as_str = as_str.replace('\\u001b', '\033')
+        if '__rep_list_with_' in as_str:  # save some time if there is no need to performe the regex
+            for match in REP_LIST_WITH_PARENTHESES_REGEX.finditer(as_str, overlapped=True):
+                match: Match[str]
+                as_str = as_str.replace(
+                    match.group(),  # type: ignore
+                    f'{match["p_start"]}{match["before"]}{match["after"]}{match["p_end"]}'
+                )
+
     except Exception as exc:
         print(exc)
         return str(result)
     else:
-        return as_str.replace('\\u001b', '\033').strip('"')
+        return as_str
 
 
 def cprint(
