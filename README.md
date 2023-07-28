@@ -1,5 +1,16 @@
 # color-pprint
 
+--------------
+
+[![License](https://img.shields.io/github/license/mccoderpy/color-pprint?color=blue&style=for-the-badge&label=License&logo=github&logoColor=white)](./LICENSE)
+[![PyPI latest release version](https://img.shields.io/pypi/v/color-pprint?color=blue&style=for-the-badge&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/color-pprint)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/color-pprint?style=for-the-badge)](https://pypi.org/project/color-pprint)
+[![PyPI downloads per Month](https://img.shields.io/pypi/dm/color-pprint?style=for-the-badge&logo=download&logoColor=white&color=blue)](https://pepy.tech/project/color-pprint)
+[![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/mccoderpy/color-pprint?style=for-the-badge&label=last%20release)](https://github.com/mccoderpy/color-pprint/releases/latest)
+[![GitHub last commit](https://img.shields.io/github/last-commit/mccoderpy/color-pprint?style=for-the-badge&label=last%20commit&logo=github&logoColor=white)](https://github.com/mccoderpy/color-pprint/commits)
+
+___________________________________________
+
 A simple package to pretty-print [lists](https://docs.python.org/3/library/stdtypes.html#list), [dicts](https://docs.python.org/3/library/stdtypes.html#dict), [tuples](https://docs.python.org/3/library/stdtypes.html#tuple), etc. with color and highlight.
 
 Documentation SOON 	&#8482;
@@ -7,7 +18,7 @@ Documentation SOON 	&#8482;
 ### You need help? Or have ideas/feedback?
 ___________________________________________
 
-Open an [Issue](https://github.com/mccoderpy/color-pprint/issues)/[Pull request](https://github.com/mccoderpy/color-pprint/pulls) on GitHub, join the [support-server](https://discord.gg/sb69muSqsg) or send me a direct-message on [Discord](https://discord.com/channels/@me): ``mccuber04#2960``
+Open an [Issue](https://github.com/mccoderpy/color-pprint/issues)/[Pull request](https://github.com/mccoderpy/color-pprint/pulls) on GitHub, join the [support-server](https://discord.gg/sb69muSqsg) or send me a direct-message on [Discord](https://discord.com/channels/@me): ``mccuber04``
 
 ### Installing
 _______________
